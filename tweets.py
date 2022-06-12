@@ -1,9 +1,10 @@
 import snscrape.modules.twitter as sntwitter
 
 
-def get_tweets_by_username(username):
+def get_tweets_by_username(username, start, end):
 
-    query = f"(from:{username}) until:2020-01-01 since:2010-01-01"
+    # until:2022-06-10 since:2021-06-10
+    query = f"(from:{username}) until:{end} since:{start}"
     tweets_content = []
     limit = 10
 

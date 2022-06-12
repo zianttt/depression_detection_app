@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, render_template, request
 from tweets import get_tweets_by_username
 from tweets_model import TweetModel
 from questions_model import QuestionModel
+import numpy as np
 
 app = Flask(__name__)
 
@@ -45,23 +46,20 @@ def results_by_questions():
     q7 = int(request.form['a7'])
     q8 = int(request.form['a8'])
     q9 = int(request.form['a9'])
+    sleep_hours = float(request.form['sleep_hours'])
+    gender = request.form['sleep_hours']
+    if gender.strip() == 'f':
+        new_gender = 0
+    else:
+        new_gender = 1
+    height = float(request.form['height'])
+    weight = float(request.form['weight'])
+    bmi = weight / (np.square(height))
 
-    values = [q1, q2, q3, q4, q5, q6, q7, q8, q9]
+    values = [q1, q2, q3, q4, q5, q6, q7, q8, q9, sleep_hours, new_gender, bmi]
     model = QuestionModel()
-    classifier = model.svm_classifier()
-    prediction = classifier.predict([values])
-    result = 'Default'
-    if prediction[0] == 0:
-        result = 'Your Depression test result : No Depression'
-    if prediction[0] == 1:
-        result = 'Your Depression test result : Mild Depression'
-    if prediction[0] == 2:
-        result = 'Your Depression test result : Moderate Depression'
-    if prediction[0] == 3:
-        result = 'Your Depression test result : Moderately severe Depression'
-    if prediction[0] == 4:
-        result = 'Your Depression test result : Severe Depression'
-    return redirect(url_for('test', result=result))
+    prediction = model.predict(np.array([values]))
+    return redirect(url_for('test', result=prediction))
 
 
 @app.route('/test')
