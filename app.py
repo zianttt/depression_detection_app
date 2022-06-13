@@ -16,7 +16,7 @@ def dashboard():
     tweets_content = []
     presiction_results = []
     if username:
-        tweets_content = get_tweets_by_username(username)
+        tweets_content = get_tweets_by_username(username, "2021-06-10", "2022-06-10")
         if len(tweets_content) == 0:
             error_msg = ['Username not found']
             return render_template('index.html', data=error_msg)
