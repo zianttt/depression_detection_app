@@ -7,23 +7,31 @@ import keras
 class TweetModel:
 
     def __init__(self) -> None:
-        self.model = keras.models.load_model('text_model_02.hdf5')
+        self.model = keras.models.load_model('text_model_bi.hdf5')
         self.classes = ['Not depressed', 'Depressed']
         self.MAXWORD = 5000
         self.MAXLEN = 130
         self.tokenizer = Tokenizer(num_words=self.MAXWORD)
 
-    def predict(self, preprocessed_tweet):
-        self.tokenizer.fit_on_texts(preprocessed_tweet)
-        sequences = self.tokenizer.texts_to_sequences(preprocessed_tweet)
+    def predict_class(self, tweet):
+        self.tokenizer.fit_on_texts(tweet)
+        sequences = self.tokenizer.texts_to_sequences(tweet)
         preprocessed_tweet = pad_sequences(sequences, maxlen=self.MAXLEN)
-        prediction = self.classes[np.around(self.model.predict(
-            preprocessed_tweet), decimals=0).argmax(axis=1)[0]]
+        pred = self.model.predict(preprocessed_tweet)
+        prediction_bin = 0
+        if (pred[0][1] >= 0.4):
+            prediction_bin = 1
+        #prediction_bin = np.around(pred, decimals=0).argmax(axis=1)[0]
+        prediction = self.classes[prediction_bin]
 
-        return prediction
+        return prediction_bin, prediction
 
     def predict_batch(self, tweets):
         results = []
-        for tweet in tweets:
-            results.append([tweet, self.predict(tweet)])
-        return results
+        results_bin = []
+        for t in tweets:
+            prediction_bin, prediction = self.predict_class(t)
+            results_bin.append(prediction_bin)
+            results.append([t, prediction])
+        depressed_percent = (results_bin.count(1) / len(tweets)) * 100
+        return results, depressed_percent

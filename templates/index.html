@@ -71,16 +71,21 @@
 
     <div class="results">
           <ul>
-          {% for tweet, pred in data %}
+          {% if res %}
+          {% for tweet, pred in res %}
               <li>{{ tweet }}: {{ pred }}</li>
           {% endfor %}
           </ul>
+          {% endif %}
+          {% if res %}
+            <p>Your probability of depression is {{ pred }} %</p>
+          {% endif %}
     </div>
 
     <div class = "center" id="recommendations">
         <P class="headerRecommendations">Recommendations of activities to overcome depression</P>
     </div>
-    {% if data %}
+    {% if res %}
     <div>
           <dl>
               <li class="recommendations">Exercise</li>
