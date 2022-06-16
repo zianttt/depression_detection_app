@@ -92,7 +92,10 @@ nav .links {
 	justify-content: space-around;
 	align-items: center;
 }
-
+nav .links li {
+	list-style: none;
+	text-align: center;
+}
 nav .links a {
 	display: block;
 	padding: 1em;
@@ -204,6 +207,37 @@ nav a:hover {
     font-family: "Itim", cursive;
 }
 
-.results li{
-    text-decoration: none;
+.headerRecommendations{
+    font-family: 'Itim', cursive;
+    color: #fff;
+    font-size: 30px;
+    width: 400px;
+    height: 90px;
+    border-color: rgba(255, 255, 255, 0);
+    background: linear-gradient(rgba(140,79,240,1), rgba(58,0,155,1));
+    display: flex;
+    border: #fff;
+    justify-content: center;
+    text-align: center;
+    left: 50%;
+}
+
+.recommendations{
+    margin-top: 25px;
+    left: 70px;
+    color: #000000;
+    font-size: 45px;
+    justify-content: center;
+    text-align: center;
+    font-family: "Itim", cursive;
+}
+
+.recommendationsDetails{
+    margin-top: 10px;
+    left: 70px;
+    color: #000000;
+    font-size: 20px;
+    justify-content: center;
+    text-align: center;
+    font-family: "Itim", cursive;
 }
