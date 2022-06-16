@@ -12,19 +12,17 @@ tweet_prediction_model = TweetModel()
 def dashboard():
     default = []
     username = request.args.get('username', '')
-    opts = request.args.get('opts', [])
     tweets_content = []
     presiction_results = []
     if username:
-        tweets_content = get_tweets_by_username(username, "2021-06-10", "2022-06-10")
+        tweets_content = get_tweets_by_username(
+            username, "2021-06-10", "2022-06-10")
         if len(tweets_content) == 0:
-            error_msg = ['Username not found']
+            error_msg = ['No records found']
             return render_template('index.html', data=error_msg)
         presiction_results = tweet_prediction_model.predict_batch(
             tweets_content)
         return render_template('index.html', data=presiction_results)
-    if opts:
-        return render_template('index.html', data=opts)
     return render_template('index.html', data=default)
 
 

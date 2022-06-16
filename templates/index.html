@@ -74,8 +74,8 @@
 
     <div class="results">
           <ul>
-          {% for tweet in data %}
-              <li>{{ tweet }}</li>
+          {% for tweet, pred in data %}
+              <li>{{ tweet }}: {{ pred }}</li>
           {% endfor %}
           </ul>
     </div>

@@ -25,5 +25,5 @@ class TweetModel:
     def predict_batch(self, tweets):
         results = []
         for tweet in tweets:
-            results.append(self.predict(tweet))
+            results.append([tweet, self.predict(tweet)])
         return results
